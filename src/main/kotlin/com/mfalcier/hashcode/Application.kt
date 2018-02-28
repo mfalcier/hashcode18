@@ -53,7 +53,6 @@ fun convertFileIntoMatrix(path: String, file: String): MutableList<MutableList<S
     return superMatrix
 }
 
-
 /**
  * Given a matrix, it will process it and return another matrix
  */
