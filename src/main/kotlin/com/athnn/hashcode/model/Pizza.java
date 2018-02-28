@@ -1,4 +1,4 @@
-package com.mfalcier.hashcode.model;
+package com.athnn.hashcode.model;
 
 import java.util.List;
 import java.util.Optional;

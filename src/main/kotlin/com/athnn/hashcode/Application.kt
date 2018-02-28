@@ -1,6 +1,6 @@
-package com.mfalcier.hashcode
+package com.athnn.hashcode
 
-import com.mfalcier.hashcode.model.Pizza
+import com.athnn.hashcode.model.Pizza
 import java.io.File
 import java.io.InputStream
 
@@ -8,6 +8,7 @@ import java.io.InputStream
  * Main function, passing a path and the filename
  */
 fun main(args: Array<String>) {
+
     val startingTime = System.currentTimeMillis()
     if (args.isEmpty()) {
         println("Please provide a name as a command-line argument")
