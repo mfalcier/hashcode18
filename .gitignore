@@ -22,6 +22,7 @@ target
 /.DS_Store
 
 # Gradle #
+/gradle
 .gradle
 /build
 /buildSrc/build
