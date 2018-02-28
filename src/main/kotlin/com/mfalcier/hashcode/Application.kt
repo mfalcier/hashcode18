@@ -1,12 +1,13 @@
 package com.mfalcier.hashcode
 
+import com.mfalcier.hashcode.model.Pizza
 import java.io.File
 import java.io.InputStream
 
 /**
  * Main function, passing a path and the filename
  */
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
     val startingTime = System.currentTimeMillis()
     if (args.isEmpty()) {
         println("Please provide a name as a command-line argument")
@@ -22,7 +23,11 @@ fun main(args : Array<String>) {
     print("Writing The Matrix... ")
     executeCommand { convertResultIntoFile(elaboratedMatrix, args[0], args[1].split(".")[0]) }
 
-    println("Everything done in ${System.currentTimeMillis()-startingTime}ms.")
+    val x = Pizza(matrix)
+
+    println("Imported pizza size: ${x.width}x${x.height}")
+
+    println("Everything done in ${System.currentTimeMillis() - startingTime}ms.")
 }
 
 /**
@@ -31,7 +36,7 @@ fun main(args : Array<String>) {
 fun <T> executeCommand(foo: () -> T): T {
     val startingTime = System.currentTimeMillis()
     val result = foo()
-    println("Done after ${System.currentTimeMillis()-startingTime}ms.")
+    println("Done after ${System.currentTimeMillis() - startingTime}ms.")
     return result
 }
 
@@ -44,7 +49,7 @@ fun convertFileIntoMatrix(path: String, file: String): MutableList<MutableList<S
     val inputStream: InputStream = File("${path}input/$file").inputStream()
     val rows = inputStream.bufferedReader().use { it.readLines() }
 
-    for(row in rows) {
+    for (row in rows) {
         val newRow = mutableListOf<String>()
         row.toCharArray().mapTo(newRow) { it.toString() }
         superMatrix.add(newRow)

@@ -19,6 +19,9 @@ hs_err_pid*
 # Maven #
 target
 
+# Gradle #
+out/
+
 # MAC Journaling #
 /.DS_Store
 
@@ -30,3 +33,6 @@ target
 /subprojects/*/build
 /subprojects/docs/src/samples/*/*/build
 /subprojects/internal-android-performance-testing/build-android-libs
+
+# Output #
+output/*.out
