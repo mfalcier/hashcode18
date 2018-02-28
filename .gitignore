@@ -20,3 +20,11 @@ target
 
 # MAC Journaling #
 /.DS_Store
+
+# Gradle #
+.gradle
+/build
+/buildSrc/build
+/subprojects/*/build
+/subprojects/docs/src/samples/*/*/build
+/subprojects/internal-android-performance-testing/build-android-libs
