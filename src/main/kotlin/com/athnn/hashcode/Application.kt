@@ -55,9 +55,9 @@ fun convertFileIntoConfiguration(path: String, file: String): Configuration {
 
     // GETTING RIDES
     val listRides = mutableListOf<Ride>()
-    for (row in rows) {
+    for ((rideId, row) in rows.withIndex()) {
         val splittedRow = row.split(" ")
-        val ride = Ride(Point(splittedRow[0].toLong(), splittedRow[1].toLong()), Point(splittedRow[2].toLong(), splittedRow[3].toLong()), splittedRow[4].toLong(), splittedRow[5].toLong())
+        val ride = Ride(rideId.toLong(), Point(splittedRow[0].toLong(), splittedRow[1].toLong()), Point(splittedRow[2].toLong(), splittedRow[3].toLong()), splittedRow[4].toLong(), splittedRow[5].toLong())
         listRides.add(ride)
     }
     val rides = Rides(listRides)
