@@ -18,7 +18,11 @@ fun main(args: Array<String>) {
     print("Converting file into The Matrix... ")
     val configuration = executeCommand { convertFileIntoConfiguration(args[0], args[1]) }
 
-    println(configuration)
+    print("Elaborating... ")
+    val vehicles = executeCommand { elaborateConfiguration(configuration) }
+
+    print("Writing into file... ")
+    executeCommand { convertVehiclesIntoFile(vehicles, args[0], args[1].split(".")[0]) }
 
     println("Everything done in ${System.currentTimeMillis() - startingTime}ms.")
 }
@@ -51,14 +55,14 @@ fun convertFileIntoConfiguration(path: String, file: String): Configuration {
     val bonus = firstSplittedRow[4].toLong()
     val maxSteps = firstSplittedRow[5].toLong()
 
-    rows = rows.drop(0)
-
     // GETTING RIDES
     val listRides = mutableListOf<Ride>()
     for ((rideId, row) in rows.withIndex()) {
-        val splittedRow = row.split(" ")
-        val ride = Ride(rideId.toLong(), Point(splittedRow[0].toLong(), splittedRow[1].toLong()), Point(splittedRow[2].toLong(), splittedRow[3].toLong()), splittedRow[4].toLong(), splittedRow[5].toLong())
-        listRides.add(ride)
+        if (rideId != 0) {
+            val splittedRow = row.split(" ")
+            val ride = Ride(rideId.toLong() - 1, Point(splittedRow[0].toLong(), splittedRow[1].toLong()), Point(splittedRow[2].toLong(), splittedRow[3].toLong()), splittedRow[4].toLong(), splittedRow[5].toLong())
+            listRides.add(ride)
+        }
     }
     val rides = Rides(listRides)
 
@@ -68,20 +72,25 @@ fun convertFileIntoConfiguration(path: String, file: String): Configuration {
 /**
  * Given a matrix, it will process it and return another matrix
  */
-fun elaborateMatrix(matrix: MutableList<MutableList<String>>): MutableList<MutableList<String>> {
-    matrix.removeAt(0)
-    return matrix
+fun elaborateConfiguration(configuration: Configuration): Vehicles {
+    for (step in 0L..configuration.maxSteps) {
+        configuration.vehicles.waitingVehicles.assignRides(configuration, step)
+
+        configuration.vehicles.notifyStep(step)
+    }
+
+    return configuration.vehicles
 }
 
 /**
  * Given a matrix, a path and a filename, it will print it into a file
  */
-fun convertResultIntoFile(matrix: MutableList<MutableList<String>>, path: String, file: String) {
+fun convertVehiclesIntoFile(vehicles: Vehicles, path: String, file: String) {
     val output = File("${path}output/$file.out")
-    for (row in matrix) {
-        var stringRow = ""
-        for (element in row) {
-            stringRow += "$element "
+    for (vehicle in vehicles.vehicles) {
+        var stringRow = "${vehicle.completedRides.rides.size} "
+        for (ride in vehicle.completedRides.rides) {
+            stringRow += "${ride.id} "
         }
         output.appendText("$stringRow\n")
     }
