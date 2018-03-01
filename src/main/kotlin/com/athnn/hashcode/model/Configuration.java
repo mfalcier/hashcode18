@@ -7,7 +7,7 @@ public class Configuration {
     private Rides rides;
     private Long maxSteps;
 
-    public Configuration(City city, Long bonus, Rides rides, Long maxSteps) {
+        public Configuration(City city, Long bonus, Rides rides, Long maxSteps) {
         this.city = city;
         this.bonus = bonus;
         this.rides = rides;

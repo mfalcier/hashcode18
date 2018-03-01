@@ -1,6 +1,6 @@
 package com.athnn.hashcode
 
-import com.athnn.hashcode.model.Pizza
+import com.athnn.hashcode.model.*
 import java.io.File
 import java.io.InputStream
 
@@ -16,17 +16,9 @@ fun main(args: Array<String>) {
     }
 
     print("Converting file into The Matrix... ")
-    val matrix = executeCommand { convertFileIntoMatrix(args[0], args[1]) }
+    val configuration = executeCommand { convertFileIntoConfiguration(args[0], args[1]) }
 
-    print("Elaborating The Matrix... ")
-    val elaboratedMatrix = executeCommand { elaborateMatrix(matrix) }
-
-    print("Writing The Matrix... ")
-    executeCommand { convertResultIntoFile(elaboratedMatrix, args[0], args[1].split(".")[0]) }
-
-    val x = Pizza(matrix)
-
-    println("Imported pizza size: ${x.width}x${x.height}")
+    println(configuration)
 
     println("Everything done in ${System.currentTimeMillis() - startingTime}ms.")
 }
@@ -42,21 +34,40 @@ fun <T> executeCommand(foo: () -> T): T {
 }
 
 /**
- * Given a path and a filename, it will convert it into a matrix
+ * Given a path and a filename, it will convert it into a Configuration
  */
-fun convertFileIntoMatrix(path: String, file: String): MutableList<MutableList<String>> {
-    val superMatrix = mutableListOf<MutableList<String>>()
-
+fun convertFileIntoConfiguration(path: String, file: String): Configuration {
     val inputStream: InputStream = File("${path}input/$file").inputStream()
-    val rows = inputStream.bufferedReader().use { it.readLines() }
+    var rows = inputStream.bufferedReader().use { it.readLines() }
 
-    for (row in rows) {
-        val newRow = mutableListOf<String>()
-        row.toCharArray().mapTo(newRow) { it.toString() }
-        superMatrix.add(newRow)
+    // GETTING CITY
+    val firstSplittedRow = rows[0].split(" ")
+    val defaultVeichle = Vehicle(Point(0,0))
+    val nVehicles = firstSplittedRow[2].toLong()
+    val vehicles = mutableListOf<Vehicle>()
+    var counter = 0
+    while (counter < nVehicles) {
+        vehicles.add(defaultVeichle)
+        counter++
     }
+    val city = City(firstSplittedRow[1].toLong(), firstSplittedRow[0].toLong(), vehicles)
 
-    return superMatrix
+    // GETTING bonus and maxSteps
+    val bonus = firstSplittedRow[4].toLong()
+    val maxSteps = firstSplittedRow[5].toLong()
+
+    rows = rows.drop(0)
+
+    // GETTING RIDES
+    val listRides = mutableListOf<Ride>()
+    for (row in rows) {
+        val splittedRow = row.split(" ")
+        val ride = Ride(Point(splittedRow[0].toLong(), splittedRow[1].toLong()), Point(splittedRow[2].toLong(), splittedRow[3].toLong()), splittedRow[4].toLong(), splittedRow[5].toLong())
+        listRides.add(ride)
+    }
+    val rides = Rides(listRides)
+
+    return Configuration(city, bonus, rides, maxSteps)
 }
 
 /**

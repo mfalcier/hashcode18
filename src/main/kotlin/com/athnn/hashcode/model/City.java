@@ -3,8 +3,9 @@ package com.athnn.hashcode.model;
 import java.util.List;
 
 public class City {
-
+    // cols
     private Long width;
+    // rows
     private Long height;
     private List<Vehicle> vehicles;
 
