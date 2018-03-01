@@ -92,6 +92,7 @@ fun elaborateConfiguration(configuration: Configuration): Vehicles {
  */
 fun convertVehiclesIntoFile(vehicles: Vehicles, path: String, file: String) {
     val output = File("${path}output/$file.out")
+    output.writeText("")
     for (vehicle in vehicles.vehicles) {
         var stringRow = "${vehicle.completedRides.rides.size} "
         for (ride in vehicle.completedRides.rides) {
