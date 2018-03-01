@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
         print("Writing into file... ")
         executeCommand { convertVehiclesIntoFile(vehicles, args[0], file.split(".")[0]) }
 
-        println("$file completed!")
+        println("$file completed!\n")
     }
     println("Everything done in ${System.currentTimeMillis() - startingTime}ms.")
 }
