@@ -3,7 +3,6 @@ package com.athnn.hashcode.model;
 import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,16 +19,12 @@ public class Rides {
         return rides;
     }
 
-    public void removeRide(Ride ride) {
-        rides.removeIf(r -> r.equals(ride));
-    }
-
-    public Optional<Ride> getBestRide(Vehicle vehicle, Long step) {
+    public List<AbstractMap.SimpleEntry<Long, Ride>> getSortedRidesWithPoints(Vehicle vehicle, Long step) {
         return rides.stream()
+                .filter(ride -> !ride.isStarted())
                 .map(ride -> new AbstractMap.SimpleEntry<>(getScore(ride, vehicle.getPosition(), step), ride))
                 .sorted(Comparator.comparingLong(AbstractMap.SimpleEntry::getKey))
-                .map(AbstractMap.SimpleEntry::getValue)
-                .findFirst();
+                .collect(Collectors.toList());
     }
 
     private Long getScore(Ride ride, Point position, Long step) {
@@ -44,5 +39,11 @@ public class Rides {
             result += ride.toString() + "\n";
         }
         return result;
+    }
+
+    public Rides exclude(List<Ride> discardedRides) {
+        return new Rides(rides.stream()
+        .filter(a -> !discardedRides.contains(a))
+        .collect(Collectors.toList()));
     }
 }

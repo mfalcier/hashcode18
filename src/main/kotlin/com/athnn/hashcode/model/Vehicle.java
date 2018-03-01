@@ -3,6 +3,7 @@ package com.athnn.hashcode.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.lang.Math.abs;
 
@@ -10,7 +11,6 @@ public class Vehicle {
 
     private Point position;
     private Ride assignedRide;
-    private boolean isRideStarted;
     private List<Ride> completedRides = new ArrayList<>();
 
     public Vehicle(Point position) {
@@ -26,7 +26,7 @@ public class Vehicle {
     }
 
     public boolean isWaiting() {
-        return Objects.isNull(assignedRide);
+        return Optional.ofNullable(assignedRide).map(ride -> !ride.isStarted()).orElse(true);
     }
 
     public void notifyStep(Long step) {
@@ -37,7 +37,7 @@ public class Vehicle {
     }
 
     private void evaluateRide(Long step) {
-        if (isRideStarted) {
+        if (assignedRide.isStarted()) {
             moveTo(assignedRide.getEnd());
             checkEndPosition();
         } else {
@@ -55,13 +55,12 @@ public class Vehicle {
 
     private void evaluateStepForStart(Long step) {
         if (step >= assignedRide.getStartRound()) {
-            isRideStarted = true;
+            assignedRide.setStarted();
             moveTo(assignedRide.getEnd());
         }
     }
 
     private void moveTo(Point destination) {
-        //TODO log
         Point distance = Point.getDistance(position, destination);
         if (abs(distance.getX()) >= abs(distance.getY())) {
             position = new Point(position.getX() + sign(distance.getX()), position.getY());
@@ -76,7 +75,6 @@ public class Vehicle {
 
     private void checkEndPosition() {
         if (position.equals(assignedRide.getEnd())) {
-            isRideStarted = false;
             completedRides.add(assignedRide);
             assignedRide = null;
         }

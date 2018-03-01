@@ -7,6 +7,7 @@ public class Ride {
     private Point end;
     private Long startRound;
     private Long endRound;
+    private boolean started = false;
 
     public Ride(Long id, Point start, Point end, Long startRound, Long endRound) {
         this.id = id;
@@ -14,6 +15,10 @@ public class Ride {
         this.end = end;
         this.startRound = startRound;
         this.endRound = endRound;
+    }
+
+    public boolean isStarted() {
+        return started;
     }
 
     public Point getStart() {
@@ -60,5 +65,9 @@ public class Ride {
     @Override
     public String toString() {
         return "" + id;
+    }
+
+    public void setStarted() {
+        started = true;
     }
 }
