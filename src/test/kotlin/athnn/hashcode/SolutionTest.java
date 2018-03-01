@@ -11,9 +11,9 @@ public class SolutionTest {
     public void foo() {
 
         Rides rides = new Rides(newArrayList(
-                new Ride(new Point(0L,0L), new Point(1L, 3L), 2L, 9L),
-                new Ride(new Point(1L,2L), new Point(1L, 0L), 0L, 9L),
-                new Ride(new Point(2L,0L), new Point(2L, 2L), 0L, 9L)
+                new Ride(0L, new Point(0L,0L), new Point(1L, 3L), 2L, 9L),
+                new Ride(1L, new Point(1L,2L), new Point(1L, 0L), 0L, 9L),
+                new Ride(2L, new Point(2L,0L), new Point(2L, 2L), 0L, 9L)
         ));
         Vehicles vehicles = new Vehicles(2);
         City city = new City(4L, 3L);
@@ -21,10 +21,11 @@ public class SolutionTest {
         Long totalSteps = 10L;
 
         for(Long step = 0L; step <= totalSteps; step++) {
-            configuration.getVehicles().getWaitingVehicles().stream()
-                    .forEach(vehicle -> vehicle.assignRide(null)); //TODO assign best ride
+            configuration.getVehicles().getWaitingVehicles().assignRides(configuration, step);
 
             configuration.getVehicles().notifyStep(step);
         }
+
+        vehicles.getVehicles().forEach(vehicle -> System.out.println(vehicle.getCompletedRides()));
     }
 }

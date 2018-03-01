@@ -30,4 +30,8 @@ public class Point {
         Point cmp = (Point) obj;
         return Objects.equals(cmp.x, x) && Objects.equals(cmp.y, y);
     }
+
+    public static Point getDistance(Point position, Point destination) {
+        return new Point(position.x - destination.x, position.y - destination.y);
+    }
 }

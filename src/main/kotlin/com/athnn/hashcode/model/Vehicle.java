@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.Math.abs;
+
 public class Vehicle {
 
     private Point position;
@@ -58,8 +60,18 @@ public class Vehicle {
         }
     }
 
-    private void moveTo(Point end) {
-        //TODO
+    private void moveTo(Point destination) {
+        //TODO log
+        Point distance = Point.getDistance(position, destination);
+        if (abs(distance.getX()) >= abs(distance.getY())) {
+            position = new Point(position.getX() + sign(distance.getX()), position.getY());
+        } else {
+            position = new Point(position.getX(), position.getY() + sign(distance.getY()));
+        }
+    }
+
+    private Long sign(Long x) {
+        return x > 0L ? 1L : -1L;
     }
 
     private void checkEndPosition() {
@@ -68,5 +80,9 @@ public class Vehicle {
             completedRides.add(assignedRide);
             assignedRide = null;
         }
+    }
+
+    public Rides getCompletedRides() {
+        return new Rides(completedRides);
     }
 }
