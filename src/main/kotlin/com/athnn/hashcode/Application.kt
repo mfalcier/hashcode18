@@ -15,15 +15,20 @@ fun main(args: Array<String>) {
         return
     }
 
-    print("Converting file into The Matrix... ")
-    val configuration = executeCommand { convertFileIntoConfiguration(args[0], args[1]) }
+    val files = listOf<String>("a_example.in", "b_should_be_easy.in", "c_no_hurry.in", "d_metropolis.in", "e_high_bonus.in")
 
-    print("Elaborating... ")
-    val vehicles = executeCommand { elaborateConfiguration(configuration) }
+    for (file in files) {
+        print("Converting $file into The Matrix... ")
+        val configuration = executeCommand { convertFileIntoConfiguration(args[0], file) }
 
-    print("Writing into file... ")
-    executeCommand { convertVehiclesIntoFile(vehicles, args[0], args[1].split(".")[0]) }
+        print("Elaborating... ")
+        val vehicles = executeCommand { elaborateConfiguration(configuration) }
 
+        print("Writing into file... ")
+        executeCommand { convertVehiclesIntoFile(vehicles, args[0], file.split(".")[0]) }
+
+        println("$file completed!")
+    }
     println("Everything done in ${System.currentTimeMillis() - startingTime}ms.")
 }
 
