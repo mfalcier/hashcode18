@@ -43,14 +43,9 @@ fun convertFileIntoConfiguration(path: String, file: String): Configuration {
     // GETTING CITY
     val firstSplittedRow = rows[0].split(" ")
     val defaultVeichle = Vehicle(Point(0,0))
-    val nVehicles = firstSplittedRow[2].toLong()
-    val vehicles = mutableListOf<Vehicle>()
-    var counter = 0
-    while (counter < nVehicles) {
-        vehicles.add(defaultVeichle)
-        counter++
-    }
-    val city = City(firstSplittedRow[1].toLong(), firstSplittedRow[0].toLong(), vehicles)
+    val nVehicles = firstSplittedRow[2].toInt()
+    val vehicles = Vehicles(nVehicles)
+    val city = City(firstSplittedRow[1].toLong(), firstSplittedRow[0].toLong())
 
     // GETTING bonus and maxSteps
     val bonus = firstSplittedRow[4].toLong()
@@ -67,7 +62,7 @@ fun convertFileIntoConfiguration(path: String, file: String): Configuration {
     }
     val rides = Rides(listRides)
 
-    return Configuration(city, bonus, rides, maxSteps)
+    return Configuration(city, bonus, rides, maxSteps, vehicles)
 }
 
 /**

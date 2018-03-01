@@ -1,5 +1,7 @@
 package com.athnn.hashcode.model;
 
+import java.util.Objects;
+
 public class Point {
 
     private Long x;
@@ -16,5 +18,16 @@ public class Point {
 
     public Long getY() {
         return y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (!(obj instanceof Point)) {
+            return false;
+        }
+
+        Point cmp = (Point) obj;
+        return Objects.equals(cmp.x, x) && Objects.equals(cmp.y, y);
     }
 }

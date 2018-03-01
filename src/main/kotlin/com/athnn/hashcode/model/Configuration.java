@@ -6,12 +6,14 @@ public class Configuration {
     private Long bonus;
     private Rides rides;
     private Long maxSteps;
+    private Vehicles vehicles;
 
-        public Configuration(City city, Long bonus, Rides rides, Long maxSteps) {
+        public Configuration(City city, Long bonus, Rides rides, Long maxSteps, Vehicles vehicles) {
         this.city = city;
         this.bonus = bonus;
         this.rides = rides;
         this.maxSteps = maxSteps;
+        this.vehicles = vehicles;
     }
 
     public City getCity() {
@@ -28,5 +30,9 @@ public class Configuration {
 
     public Long getMaxSteps() {
         return maxSteps;
+    }
+
+    public Vehicles getVehicles() {
+        return vehicles;
     }
 }
