@@ -32,6 +32,6 @@ public class Point {
     }
 
     public static Point getDistance(Point position, Point destination) {
-        return new Point(position.x - destination.x, position.y - destination.y);
+        return new Point(destination.x - position.x, destination.y - position.y);
     }
 }

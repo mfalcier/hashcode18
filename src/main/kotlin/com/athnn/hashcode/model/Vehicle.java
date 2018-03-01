@@ -71,7 +71,7 @@ public class Vehicle {
     }
 
     private Long sign(Long x) {
-        return x > 0L ? 1L : -1L;
+        return x >= 0L ? 1L : -1L;
     }
 
     private void checkEndPosition() {

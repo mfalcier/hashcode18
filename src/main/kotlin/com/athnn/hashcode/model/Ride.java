@@ -56,4 +56,9 @@ public class Ride {
                 startRound.equals(cmp.startRound) &&
                 endRound.equals(cmp.endRound);
     }
+
+    @Override
+    public String toString() {
+        return "" + id;
+    }
 }

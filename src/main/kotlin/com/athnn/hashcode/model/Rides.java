@@ -39,6 +39,10 @@ public class Rides {
 
     @Override
     public String toString() {
-        return "";
+        String result = "";
+        for (Ride ride: rides) {
+            result += ride.toString() + "\n";
+        }
+        return result;
     }
 }
