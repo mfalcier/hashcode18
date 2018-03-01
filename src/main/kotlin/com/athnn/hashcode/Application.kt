@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
     val files = listOf<String>("a_example.in", "b_should_be_easy.in", "c_no_hurry.in", "d_metropolis.in", "e_high_bonus.in")
 
     for (file in files) {
-        print("Converting $file into The Matrix... ")
+        print("Converting $file into Configuration... ")
         val configuration = executeCommand { convertFileIntoConfiguration(args[0], file) }
 
         print("Elaborating... ")
@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
         print("Writing into file... ")
         executeCommand { convertVehiclesIntoFile(vehicles, args[0], file.split(".")[0]) }
 
-        println("$file completed!\n")
+        println("$file completed after !\n")
     }
     println("Everything done in ${System.currentTimeMillis() - startingTime}ms.")
 }
