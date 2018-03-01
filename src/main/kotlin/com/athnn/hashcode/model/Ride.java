@@ -1,4 +1,4 @@
-package com.mfalcier.hashcode.model;
+package com.athnn.hashcode.model;
 
 public class Ride {
 

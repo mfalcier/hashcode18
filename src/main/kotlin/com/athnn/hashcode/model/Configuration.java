@@ -1,15 +1,13 @@
-package com.mfalcier.hashcode.model;
-
-import java.util.List;
+package com.athnn.hashcode.model;
 
 public class Configuration {
 
     private City city;
     private Long bonus;
-    private List<Ride> rides;
+    private Rides rides;
     private Long maxSteps;
 
-    public Configuration(City city, Long bonus, List<Ride> rides, Long maxSteps) {
+    public Configuration(City city, Long bonus, Rides rides, Long maxSteps) {
         this.city = city;
         this.bonus = bonus;
         this.rides = rides;
@@ -24,7 +22,7 @@ public class Configuration {
         return bonus;
     }
 
-    public List<Ride> getRides() {
+    public Rides getRides() {
         return rides;
     }
 
